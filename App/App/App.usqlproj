@@ -25,10 +25,5 @@
     <Script Include="Query.usql" />
     <Script Include="RegisterCustomTypes.usql" />
   </ItemGroup>
-  <ItemGroup>
-    <ScriptCode Include="Query.usql.cs">
-      <DependentUpon>Query.usql</DependentUpon>
-    </ScriptCode>
-  </ItemGroup>
   <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" />
 </Project>
