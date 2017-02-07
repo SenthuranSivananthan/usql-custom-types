@@ -1,0 +1,2 @@
+﻿DROP ASSEMBLY IF EXISTS CustomTypes;
+CREATE ASSEMBLY CustomTypes FROM @"adl://senthurandemo.azuredatalakestore.net/Assemblies/CustomTypes.dll";

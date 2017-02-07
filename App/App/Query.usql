@@ -1,0 +1,26 @@
+﻿REFERENCE ASSEMBLY master.CustomTypes;
+
+@phase1 =
+    EXTRACT id int,
+            name string,
+            preferredCommList string
+    FROM @"adl://senthurandemo.azuredatalakestore.net/customtypes-data/input.tsv"
+    USING Extractors.Tsv();
+
+@phase2 =
+    SELECT id,
+           name,
+           CustomTypes.PreferredCommunication.ParseFrom(preferredCommList, '|') AS preferredComm
+    FROM @phase1;
+
+@phase3 =
+    SELECT id,
+           name,
+           channel
+    FROM @phase2 AS de
+         CROSS APPLY
+             EXPLODE(de.preferredComm.Channels) AS pc(channel);
+
+OUTPUT @phase3
+TO @"adl://senthurandemo.azuredatalakestore.net/customtypes-data/output.tsv"
+USING Outputters.Csv();
